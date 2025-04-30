@@ -1,12 +1,12 @@
 import torch
 import torch.nn as nn
-import torch.nn.functional as F
 import pandas as pd
 import os
 import numpy as np
 from sklearn.model_selection import train_test_split
 from torch.utils.data import TensorDataset, DataLoader
 from sklearn.metrics import classification_report
+from scipy.special import expit  # for post-sigmoid conversion
 
 # --- Load patient labels ---
 def load_patient_labels(csv_path):
@@ -59,14 +59,13 @@ class DeepOmniScaleCNN(nn.Module):
             nn.Linear(64, 32),
             nn.ReLU(),
             nn.Dropout(0.5),
-            nn.Linear(32, num_classes),
-            nn.Sigmoid()
+            nn.Linear(32, num_classes)  # No Sigmoid here
         )
 
     def forward(self, x):
         x = self.features(x)
         x = self.classifier(x)
-        return x
+        return x  # Raw logits (no sigmoid)
 
 # --- Load data ---
 label_dict = load_patient_labels('/Users/trushamaheshwari/Downloads/pads-parkinsons-disease-smartwatch-dataset-1.0.0/MLPR_project/patient_data.csv')
@@ -88,7 +87,7 @@ val_loader = DataLoader(val_ds, batch_size=64)
 
 # Model, loss, optimizer
 model = DeepOmniScaleCNN()
-criterion = nn.BCELoss()
+criterion = nn.BCEWithLogitsLoss()
 optimizer = torch.optim.Adam(model.parameters(), lr=1e-3)
 
 # Training loop
@@ -118,4 +117,6 @@ with torch.no_grad():
     preds = torch.cat(preds).squeeze().numpy()
     labels = torch.cat(labels).squeeze().numpy()
 
-print(classification_report(labels, preds > 0.5))
+# Apply sigmoid to logits before classification report
+probs = expit(preds)
+print(classification_report(labels, probs > 0.5))
