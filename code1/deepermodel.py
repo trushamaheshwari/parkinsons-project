@@ -91,7 +91,7 @@ criterion = nn.BCEWithLogitsLoss()
 optimizer = torch.optim.Adam(model.parameters(), lr=1e-3)
 
 # Training loop
-for epoch in range(15): 
+for epoch in range(10): 
     model.train()
     train_loss = 0.0
     for xb, yb in train_loader:
