@@ -5,8 +5,13 @@ import os
 import numpy as np
 from sklearn.model_selection import train_test_split
 from torch.utils.data import TensorDataset, DataLoader
-from sklearn.metrics import classification_report
+from sklearn.metrics import classification_report, roc_auc_score
 from scipy.special import expit  # for post-sigmoid conversion
+import wandb
+
+wandb.init(project="parkinsons-detection-deepNN", name="OmniScaleCNN")
+
+np.random.seed
 
 # --- Load patient labels ---
 def load_patient_labels(csv_path):
@@ -35,20 +40,20 @@ class DeepOmniScaleCNN(nn.Module):
         super(DeepOmniScaleCNN, self).__init__()
 
         self.features = nn.Sequential(
-            nn.Conv1d(input_channels, 64, kernel_size=3, padding=1),
+            nn.Conv1d(input_channels, 64, kernel_size=7),
             nn.BatchNorm1d(64),
             nn.ReLU(),
 
-            nn.Conv1d(64, 64, kernel_size=3, padding=1),
-            nn.BatchNorm1d(64),
+            nn.Conv1d(64, 128, kernel_size=5),
+            nn.BatchNorm1d(128),
             nn.ReLU(),
 
-            nn.Conv1d(64, 64, kernel_size=5, padding=2),
-            nn.BatchNorm1d(64),
+            nn.Conv1d(128, 256, kernel_size=3),
+            nn.BatchNorm1d(256),
             nn.ReLU(),
 
-            nn.Conv1d(64, 64, kernel_size=5, padding=2),
-            nn.BatchNorm1d(64),
+            nn.Conv1d(256, 512, kernel_size=1),
+            nn.BatchNorm1d(512),
             nn.ReLU(),
 
             nn.AdaptiveAvgPool1d(1)
@@ -56,10 +61,15 @@ class DeepOmniScaleCNN(nn.Module):
 
         self.classifier = nn.Sequential(
             nn.Flatten(),
-            nn.Linear(64, 32),
-            nn.ReLU(),
+            nn.Linear(512, 64),
+            nn.LayerNorm(64),
+            nn.LeakyReLU(),
             nn.Dropout(0.5),
-            nn.Linear(32, num_classes)  # No Sigmoid here
+            nn.Linear(64, 32),
+            nn.LayerNorm(32),
+            nn.LeakyReLU(),
+            nn.Dropout(0.3),
+            nn.Linear(32, num_classes)  # Output logits
         )
 
     def forward(self, x):
@@ -75,6 +85,11 @@ X, y = load_movement_data('/Users/trushamaheshwari/Downloads/pads-parkinsons-dis
 X_tensor = torch.tensor(X, dtype=torch.float32)
 y_tensor = torch.tensor(y, dtype=torch.float32).unsqueeze(1)
 
+# Class balancing for loss function
+num_positives = (y_tensor == 1).sum().item()
+num_negatives = (y_tensor == 0).sum().item()
+pos_weight = torch.tensor([num_negatives / num_positives])
+
 # Train/test split
 X_train, X_val, y_train, y_val = train_test_split(X_tensor, y_tensor, test_size=0.2, random_state=42)
 
@@ -82,13 +97,14 @@ X_train, X_val, y_train, y_val = train_test_split(X_tensor, y_tensor, test_size=
 train_ds = TensorDataset(X_train, y_train)
 val_ds = TensorDataset(X_val, y_val)
 
-train_loader = DataLoader(train_ds, batch_size=64, shuffle=True)
-val_loader = DataLoader(val_ds, batch_size=64)
+train_loader = DataLoader(train_ds, batch_size=128, shuffle=True)
+val_loader = DataLoader(val_ds, batch_size=128)
 
 # Model, loss, optimizer
 model = DeepOmniScaleCNN()
-criterion = nn.BCEWithLogitsLoss()
+criterion = nn.BCEWithLogitsLoss(pos_weight=pos_weight)
 optimizer = torch.optim.Adam(model.parameters(), lr=1e-3)
+wandb.watch(model, log="all")
 
 # Training loop
 for epoch in range(10): 
@@ -119,4 +135,19 @@ with torch.no_grad():
 
 # Apply sigmoid to logits before classification report
 probs = expit(preds)
-print(classification_report(labels, probs > 0.5))
+pred_classes = (probs > 0.5)
+
+report = classification_report(labels, pred_classes, output_dict=True)
+roc_auc = roc_auc_score(labels, probs)
+
+# Print and log
+print(classification_report(labels, pred_classes))
+wandb.log({
+    "Precision": report['1']['precision'],
+    "Recall": report['1']['recall'],
+    "F1 Score": report['1']['f1-score'],
+    "Accuracy": report['accuracy'],
+    "ROC AUC": roc_auc
+})
+
+wandb.finish()

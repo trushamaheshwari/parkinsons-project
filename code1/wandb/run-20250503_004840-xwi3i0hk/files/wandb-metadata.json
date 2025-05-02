@@ -1,0 +1,35 @@
+{
+  "os": "macOS-10.16-x86_64-i386-64bit",
+  "python": "CPython 3.11.4",
+  "startedAt": "2025-05-02T19:18:40.152380Z",
+  "program": "/Users/trushamaheshwari/Downloads/pads-parkinsons-disease-smartwatch-dataset-1.0.0/MLPR_project/parkinsons-project/code1/deepermodel.py",
+  "codePath": "code1/deepermodel.py",
+  "git": {
+    "remote": "https://github.com/trushamaheshwari/parkinsons-project.git",
+    "commit": "291befe620a52c78162425b3d318da5c4c29642f"
+  },
+  "email": "trusha.mah@gmail.com",
+  "root": "/Users/trushamaheshwari/Downloads/pads-parkinsons-disease-smartwatch-dataset-1.0.0/MLPR_project/parkinsons-project/code1",
+  "host": "trushas-MacBook-Air.local",
+  "executable": "/Users/trushamaheshwari/anaconda3/bin/python",
+  "codePathLocal": "deepermodel.py",
+  "cpu_count": 2,
+  "cpu_count_logical": 4,
+  "disk": {
+    "/": {
+      "total": "121018208256",
+      "used": "120905277440"
+    },
+    "/System/Volumes/Data": {
+      "total": "121018208256",
+      "used": "120905277440"
+    }
+  },
+  "memory": {
+    "total": "8589934592"
+  },
+  "cpu": {
+    "count": 2,
+    "countLogical": 4
+  }
+}

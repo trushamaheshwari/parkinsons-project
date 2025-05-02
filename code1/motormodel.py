@@ -4,6 +4,9 @@ import torch.nn.functional as F
 import pandas as pd
 import os
 import numpy as np
+import wandb
+
+wandb.init(project="parkinsons-detection", name="OmniScaleCNN")
 
 def load_patient_labels(csv_path):
     df = pd.read_csv(csv_path)
@@ -113,6 +116,8 @@ for epoch in range(15):
         train_loss += loss.item()
 
     print(f"Epoch {epoch+1}, Train Loss: {train_loss / len(train_loader):.4f}")
+    wandb.log({"Train Loss": train_loss / len(train_loader), "epoch": epoch+1})
+
 
 model.eval()
 with torch.no_grad():
@@ -129,3 +134,16 @@ with torch.no_grad():
 # Binary classification report
 from sklearn.metrics import classification_report
 print(classification_report(labels, preds > 0.5))
+
+from sklearn.metrics import classification_report
+
+report = classification_report(labels, preds > 0.5, output_dict=True)
+wandb.log({
+    "Precision": report['1']['precision'],
+    "Recall": report['1']['recall'],
+    "F1 Score": report['1']['f1-score'],
+    "Accuracy": report['accuracy']
+})
+
+wandb.finish()
+
