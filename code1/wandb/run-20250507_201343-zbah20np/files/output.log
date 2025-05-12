@@ -1,0 +1,43 @@
+Epoch 1, Train Loss: 0.5803
+Epoch 2, Train Loss: 0.5688
+Epoch 3, Train Loss: 0.5428
+Epoch 4, Train Loss: 0.5529
+Epoch 5, Train Loss: 0.5242
+Epoch 6, Train Loss: 0.5019
+Epoch 7, Train Loss: 0.4678
+Epoch 8, Train Loss: 0.4458
+Traceback (most recent call last):
+  File "/Users/trushamaheshwari/Downloads/pads-parkinsons-disease-smartwatch-dataset-1.0.0/MLPR_project/parkinsons-project/code1/deepermodel.py", line 115, in <module>
+    preds = model(xb)
+            ^^^^^^^^^
+  File "/Users/trushamaheshwari/anaconda3/lib/python3.11/site-packages/torch/nn/modules/module.py", line 1511, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/trushamaheshwari/anaconda3/lib/python3.11/site-packages/torch/nn/modules/module.py", line 1561, in _call_impl
+    result = forward_call(*args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/trushamaheshwari/Downloads/pads-parkinsons-disease-smartwatch-dataset-1.0.0/MLPR_project/parkinsons-project/code1/deepermodel.py", line 76, in forward
+    x = self.features(x)
+        ^^^^^^^^^^^^^^^^
+  File "/Users/trushamaheshwari/anaconda3/lib/python3.11/site-packages/torch/nn/modules/module.py", line 1511, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/trushamaheshwari/anaconda3/lib/python3.11/site-packages/torch/nn/modules/module.py", line 1520, in _call_impl
+    return forward_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/trushamaheshwari/anaconda3/lib/python3.11/site-packages/torch/nn/modules/container.py", line 217, in forward
+    input = module(input)
+            ^^^^^^^^^^^^^
+  File "/Users/trushamaheshwari/anaconda3/lib/python3.11/site-packages/torch/nn/modules/module.py", line 1511, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/trushamaheshwari/anaconda3/lib/python3.11/site-packages/torch/nn/modules/module.py", line 1520, in _call_impl
+    return forward_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/trushamaheshwari/anaconda3/lib/python3.11/site-packages/torch/nn/modules/conv.py", line 310, in forward
+    return self._conv_forward(input, self.weight, self.bias)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/trushamaheshwari/anaconda3/lib/python3.11/site-packages/torch/nn/modules/conv.py", line 306, in _conv_forward
+    return F.conv1d(input, weight, bias, self.stride,
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+KeyboardInterrupt

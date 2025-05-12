@@ -1,0 +1,24 @@
+Epoch 1, Train Loss: 0.5917
+Epoch 2, Train Loss: 0.5638
+Epoch 3, Train Loss: 0.5641
+Epoch 4, Train Loss: 0.5410
+Epoch 5, Train Loss: 0.5452
+Epoch 6, Train Loss: 0.5281
+Epoch 7, Train Loss: 0.5095
+Epoch 8, Train Loss: 0.4769
+Epoch 9, Train Loss: 0.4439
+Epoch 10, Train Loss: 0.4134
+Prediction Distribution: {False: 75, True: 19}
+              precision    recall  f1-score   support
+
+         0.0       0.47      0.88      0.61        40
+         1.0       0.74      0.26      0.38        54
+
+    accuracy                           0.52        94
+   macro avg       0.60      0.57      0.50        94
+weighted avg       0.62      0.52      0.48        94
+Traceback (most recent call last):
+  File "/Users/trushamaheshwari/Downloads/pads-parkinsons-disease-smartwatch-dataset-1.0.0/MLPR_project/parkinsons-project/code1/deepermodel.py", line 148, in <module>
+    "Precision": report['1']['precision'],
+                 ~~~~~~^^^^^
+KeyError: '1'

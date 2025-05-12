@@ -1,0 +1,15 @@
+{"time":"2025-05-07T20:13:43.58551+05:30","level":"INFO","msg":"stream: starting","core version":"0.19.7","symlink path":"/Users/trushamaheshwari/Downloads/pads-parkinsons-disease-smartwatch-dataset-1.0.0/MLPR_project/parkinsons-project/code1/wandb/run-20250507_201343-zbah20np/logs/debug-core.log"}
+{"time":"2025-05-07T20:13:43.623774+05:30","level":"INFO","msg":"created new stream","id":"zbah20np"}
+{"time":"2025-05-07T20:13:43.624246+05:30","level":"INFO","msg":"writer: Do: started","stream_id":"zbah20np"}
+{"time":"2025-05-07T20:13:43.624996+05:30","level":"INFO","msg":"stream: started","id":"zbah20np"}
+{"time":"2025-05-07T20:13:43.625376+05:30","level":"INFO","msg":"sender: started","stream_id":"zbah20np"}
+{"time":"2025-05-07T20:13:43.625438+05:30","level":"INFO","msg":"handler: started","stream_id":"zbah20np"}
+{"time":"2025-05-07T20:13:44.186928+05:30","level":"INFO","msg":"Starting system monitor"}
+{"time":"2025-05-07T20:16:23.681546+05:30","level":"INFO","msg":"stream: closing","id":"zbah20np"}
+{"time":"2025-05-07T20:16:23.682619+05:30","level":"INFO","msg":"Stopping system monitor"}
+{"time":"2025-05-07T20:16:23.682884+05:30","level":"INFO","msg":"Stopped system monitor"}
+{"time":"2025-05-07T20:16:24.741792+05:30","level":"INFO","msg":"fileTransfer: Close: file transfer manager closed"}
+{"time":"2025-05-07T20:16:25.14546+05:30","level":"INFO","msg":"sender: closed","stream_id":"zbah20np"}
+{"time":"2025-05-07T20:16:25.145371+05:30","level":"INFO","msg":"handler: closed","stream_id":"zbah20np"}
+{"time":"2025-05-07T20:16:25.145427+05:30","level":"INFO","msg":"writer: Close: closed","stream_id":"zbah20np"}
+{"time":"2025-05-07T20:16:25.14624+05:30","level":"INFO","msg":"stream: closed","id":"zbah20np"}

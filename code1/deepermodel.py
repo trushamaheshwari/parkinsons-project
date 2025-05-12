@@ -136,6 +136,8 @@ with torch.no_grad():
 # Apply sigmoid to logits before classification report
 probs = expit(preds)
 pred_classes = (probs > 0.5)
+unique, counts = np.unique(pred_classes, return_counts=True)
+print("Prediction Distribution:", dict(zip(unique, counts)))
 
 report = classification_report(labels, pred_classes, output_dict=True)
 roc_auc = roc_auc_score(labels, probs)
